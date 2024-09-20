@@ -16,12 +16,12 @@ use tracing::error;
 
 mod delay;
 mod latency;
-mod rotating_histogram;
+pub mod rotating_histogram;
 mod select;
 
 use delay::Delay;
 use latency::Latency;
-use rotating_histogram::RotatingHistogram;
+pub use rotating_histogram::RotatingHistogram;
 use select::Select;
 
 type Histo = Arc<Mutex<RotatingHistogram>>;
@@ -125,7 +125,7 @@ impl<S, P> Hedge<S, P> {
         Self::new_with_histo(service, policy, min_data_points, latency_percentile, histo)
     }
 
-    fn new_with_histo<Request>(
+    pub fn new_with_histo<Request>(
         service: S,
         policy: P,
         min_data_points: u64,
